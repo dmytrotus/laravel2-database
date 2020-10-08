@@ -13,5 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/', function(){
+	return redirect()->route('login');
+});
 
-Route::resource('/', 'CustomersController');
+Auth::routes();
+
+Route::group(['middleware' => ['auth'], 'prefix' => 'dashboard'], function () {
+	Route::resource('/', 'CustomersController');
+});

@@ -14,7 +14,7 @@ class CustomersController extends Controller
      */
     public function index()
     {
-        return view('adminpanel.index');
+        return view('adminpanel.layouts.index');
     }
 
     /**
