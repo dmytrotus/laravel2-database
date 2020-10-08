@@ -17,7 +17,17 @@
 
 		<div class="col-md-8">
 			<h4 class="text-center">Lista użytkowników</h4>
+			<ul class="list-group">
+				@foreach($customers as $customer)
+			  <li class="list-group-item disabled">{{ $customer->name }}</li>
+			  	@endforeach
+			</ul>
 		</div>
+
+		<div class="p-2 m-auto">
+			{{ $customers->links('vendor.pagination.bootstrap-4') }}
+		</div>
+		
 
 	</div>	
 </div>

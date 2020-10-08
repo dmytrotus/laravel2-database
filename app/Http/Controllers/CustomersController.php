@@ -13,8 +13,10 @@ class CustomersController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        return view('adminpanel.layouts.index');
+    {   
+        $customers = Customers::paginate(25);
+        return view('adminpanel.layouts.index')
+        ->with(compact('customers'));
     }
 
     /**
