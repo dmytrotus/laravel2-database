@@ -19,7 +19,23 @@
 			<h4 class="text-center">Lista użytkowników</h4>
 			<ul class="list-group">
 				@foreach($customers as $customer)
-			  <li class="list-group-item disabled">{{ $customer->name }}</li>
+			  <li class="list-group-item disabled">
+			  	<div class="row">
+			  		<div class="col-md-3">
+			  			<b>Imię: </b>{{ $customer->name }}
+			  		</div>
+			  		<div class="col-md-3">
+			  			<b>Adres: </b>{{ $customer->adress }}
+			  		</div>
+			  		<div class="col-md-3">
+			  			<b>Wiek: </b>{{ $customer->age }}
+			  		</div>
+			  		<div class="col-md-3">
+			  			<b>Płeć: </b>{{ __($customer->gender) }}
+			  		</div>
+			  	</div>
+			  	
+			  </li>
 			  	@endforeach
 			</ul>
 		</div>
