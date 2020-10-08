@@ -18,17 +18,22 @@ class CustomersController extends Controller
         $customers = DB::table('customers');
 
         foreach($r->all() as $key=>$value){
-            $arr_like = ['name', 'adress'];
 
-            if(in_array($key, $arr_like))
+            if($value != null)
             {
-                $customers->where($key, 'LIKE', "%$value%");
-            }
 
-            $arr_equal = ['gender', 'age'];
-            if(in_array($key, $arr_equal))
-            {
-                $customers->where($key, $value);
+                $arr_like = ['name', 'adress'];
+
+                if(in_array($key, $arr_like))
+                {
+                    $customers->where($key, 'LIKE', "%$value%");
+                }
+
+                $arr_equal = ['gender', 'age'];
+                if(in_array($key, $arr_equal))
+                {
+                    $customers->where($key, $value);
+                }
             }
         }
 

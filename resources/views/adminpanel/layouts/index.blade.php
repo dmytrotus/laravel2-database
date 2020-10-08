@@ -8,9 +8,34 @@
 			<div class="card">
 			  <div class="card-body">
 			    <h4 class="card-title text-center">Filter</h4>
-			    <form action="/">
-			    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-			    <button type="submit" class="btn btn-primary">Filtruj</button>
+			    <form action="/dashboard">
+			    	<div class="form-group">
+			    		<label for="name">Imię</label>
+			    		<input value="{{request()->name}}" class="form-control" type="text" name="name">
+			    	</div>
+
+			    	<div class="form-group">
+			    		<label for="adress">Adres</label>
+			    		<input value="{{request()->adress}}" class="form-control" type="text" name="adress">
+			    	</div>
+
+			    	<div class="form-group">
+			    	<select name="gender" class="form-control">
+			    		<option>Wybierz</option>
+			    		@foreach(['male', 'female'] as $gender)
+			    		<option @if(request()->gender == $gender) selected @endif value="{{ $gender }}">
+			    		{{ __($gender) }}
+			    		</option>
+			    		@endforeach
+			    	</select>
+			    	</div>
+
+			    	<div class="form-group">
+			    		<label for="age">Wiek</label>
+			    		<input class="form-control" type="number" name="age">
+			    	</div>
+
+			    <button type="submit" class="btn w-100 btn-primary">Filtruj</button>
 			    </form>
 			  </div>
 			</div>
