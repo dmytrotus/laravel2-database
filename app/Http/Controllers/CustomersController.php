@@ -99,7 +99,8 @@ class CustomersController extends Controller
      */
     public function edit(Customers $customer)
     {
-        dd($customer->name);
+        return view('adminpanel.layouts.single_customer')
+        ->with(compact('customer'));
     }
 
     /**
@@ -109,9 +110,23 @@ class CustomersController extends Controller
      * @param  \App\Models\Customers  $customers
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $r, Customers $customers)
+    public function update(Request $r, Customers $customer)
     {
-        //
+        $r->validate([
+            'name' => 'required|max:255',
+            'adress' => 'required|max:255',
+            'gender' => 'required|max:255',
+            'age' => 'required|max:3'
+        ]);
+
+        $customer->name = $r->name;
+        $customer->adress = $r->adress;
+        $customer->gender = $r->gender;
+        $customer->age = $r->age;
+        $customer->save();
+
+        session()->flash('success', 'Użytkownik zaktualizowany');
+        return redirect()->back();
     }
 
     /**
