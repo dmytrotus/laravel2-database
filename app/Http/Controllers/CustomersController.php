@@ -60,9 +60,24 @@ class CustomersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $r)
     {
-        //
+        $r->validate([
+            'new_customer_name' => 'required|max:255',
+            'new_customer_adress' => 'required|max:255',
+            'new_customer_gender' => 'required|max:255',
+            'new_customer_age' => 'required|max:3'
+        ]);
+
+        Customers::create([
+            'name' => $r->new_customer_name,
+            'adress' => $r->new_customer_adress,
+            'gender' => $r->new_customer_gender,
+            'age' => (int)$r->new_customer_age
+        ]);
+        session()->flash('success', 'Użytkownik dodany');
+
+        return redirect()->back();
     }
 
     /**
@@ -94,7 +109,7 @@ class CustomersController extends Controller
      * @param  \App\Models\Customers  $customers
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Customers $customers)
+    public function update(Request $r, Customers $customers)
     {
         //
     }
