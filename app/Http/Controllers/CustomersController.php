@@ -88,7 +88,7 @@ class CustomersController extends Controller
      */
     public function show(Customers $customers)
     {
-        //
+        return redirect()->route('customers.index');
     }
 
     /**
@@ -120,8 +120,11 @@ class CustomersController extends Controller
      * @param  \App\Models\Customers  $customers
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Customers $customers)
+    public function destroy(Customers $customer)
     {
-        //
+        $customer->delete();
+        session()->flash('success', 'Użytkownik usunięty');
+
+        return redirect()->back();
     }
 }

@@ -22,7 +22,7 @@
 			<div class="card">
 			  <div class="card-body">
 			    <h4 class="card-title text-center">Filter</h4>
-			    <form action="/dashboard">
+			    <form action="{{ route('customers.index') }}">
 			    	<div class="form-group">
 			    		<label for="name">Imię</label>
 			    		<input value="{{request()->name}}" class="form-control" type="text" name="name">
@@ -60,7 +60,7 @@
 				</div>
 
 				<a href="##" id="add_customer_button" class="btn btn-sm btn-success">Dodaj użytkownika</a>
-				<form id="add-customer-form" method="POST" class="d-none p-2" action="{{ route('store')}}">
+				<form id="add-customer-form" method="POST" class="d-none p-2" action="{{ route('customers.store')}}">
 					@csrf
 					<div class="form-group">
 			    		<label for="new_customer_name">Imię</label>
@@ -92,8 +92,11 @@
 				</form>
 				
 
-				<form id="destroy-customer-form" method="POST" action="{{ 3 }}">
-					
+				<form class="form-group" id="destroy-customer-form" method="POST" action="#">
+					@method('delete')
+					@csrf
+					<input id="destroy-customer-input" type="hidden">
+					<button class="btn w-100 btn-sm btn-danger mt-2" disabled type="submit">Usuń wybranego uzytkownika</button>
 				</form>
 			</div>
 		</div>
@@ -102,7 +105,7 @@
 			<h4 class="text-center">Lista użytkowników</h4>
 			<ul class="list-group">
 				@foreach($customers as $customer)
-			  <li class="list-group-item disabled">
+			  <li class="list-group-item">
 			  	<div class="row">
 			  		<div class="col-md-3">
 			  			<b>Imię: </b>{{ $customer->name }}
@@ -110,15 +113,20 @@
 			  		<div class="col-md-3">
 			  			<b>Adres: </b>{{ $customer->adress }}
 			  		</div>
-			  		<div class="col-md-3">
+			  		<div class="col-md-1">
 			  			<b>Wiek: </b>{{ $customer->age }}
 			  		</div>
 			  		<div class="col-md-3">
 			  			<b>Płeć: </b>{{ __($customer->gender) }}
 			  		</div>
+			  		<div class="col-md-2">
+			  			<button data-id="{{ $customer->id }}"
+			  			class="choose_customer btn btn-primary btn-sm">Wybierz</button>	
+			  		</div>
 			  	</div>
 			  	
 			  </li>
+			  
 			  	@endforeach
 			</ul>
 		</div>
@@ -137,6 +145,24 @@
 	$('#add_customer_button').click(function(e){
 		e.preventDefault();
 		$('#add-customer-form').toggleClass('d-none');
+	})
+
+	$('.choose_customer').click(function(e){
+		e.preventDefault();
+		$user_id = $(this).attr('data-id');
+		if($user_id == $('#destroy-customer-input').val())
+		{
+			$('.list-group-item').removeClass('bg-danger');
+			$('#destroy-customer-input').val('')
+			$('#destroy-customer-form > button').attr('disabled', true)
+		} else {
+			$('#destroy-customer-input').val($user_id);
+			$('.list-group-item').removeClass('bg-danger');
+			$(this).parent().parent().parent().addClass('bg-danger');
+			$('#destroy-customer-form > button').attr('disabled', false)
+		}
+		$('#destroy-customer-form').attr('action', '/dashboard/customers/' + $('#destroy-customer-input').val())
+		
 	})
 </script>
 
