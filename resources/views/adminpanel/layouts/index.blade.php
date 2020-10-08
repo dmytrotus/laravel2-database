@@ -59,38 +59,10 @@
 			    <h4 class="card-title text-center">Działania</h4>
 				</div>
 
-				<a href="##" id="add_customer_button" class="btn btn-sm btn-success">Dodaj użytkownika</a>
-				<form id="add-customer-form" method="POST" class="d-none p-2" action="{{ route('customers.store')}}">
-					@csrf
-					<div class="form-group">
-			    		<label for="new_customer_name">Imię</label>
-			    		<input class="form-control" placeholder="Wpisz imię" type="text" name="new_customer_name">
-			    	</div>
+				@component('adminpanel.partials.add-customer-form')
+				@endcomponent
 
-			    	<div class="form-group">
-			    		<label for="new_customer_adress">Adres</label>
-			    		<input class="form-control" placeholder="Wpisz adres" type="text" name="new_customer_adress">
-			    	</div>
-
-			    	<div class="form-group">
-			    	<select name="new_customer_gender" class="form-control">
-			    		<option>Wybierz płeć</option>
-			    		@foreach(['male', 'female'] as $gender)
-			    		<option value="{{ $gender }}">
-			    		{{ __($gender) }}
-			    		</option>
-			    		@endforeach
-			    	</select>
-			    	</div>
-
-			    	<div class="form-group">
-			    		<label for="new_customer_age">Wiek</label>
-			    		<input min="18" max="60" class="form-control" type="number" name="new_customer_age">
-			    	</div>
-
-			    	<button class="btn btn-sm btn-success" type="submit">Zapisz</button>
-				</form>
-				
+				<a href="#" id="edit_customer_button" class="btn btn-sm btn-primary mt-2 disabled">Edytuj użytkownika</a>			
 
 				<form class="form-group" id="destroy-customer-form" method="POST" action="#">
 					@method('delete')
@@ -153,17 +125,23 @@
 		if($user_id == $('#destroy-customer-input').val())
 		{
 			$('.list-group-item').removeClass('bg-danger');
-			$('#destroy-customer-input').val('')
-			$('#destroy-customer-form > button').attr('disabled', true)
+			$('#destroy-customer-input').val('');
+			$('#destroy-customer-form > button').attr('disabled', true);
+			$('#edit_customer_button').addClass('disabled');
 		} else {
 			$('#destroy-customer-input').val($user_id);
 			$('.list-group-item').removeClass('bg-danger');
 			$(this).parent().parent().parent().addClass('bg-danger');
-			$('#destroy-customer-form > button').attr('disabled', false)
+			$('#destroy-customer-form > button').attr('disabled', false);
+			$('#edit_customer_button').removeClass('disabled');
 		}
-		$('#destroy-customer-form').attr('action', '/dashboard/customers/' + $('#destroy-customer-input').val())
+		$('#destroy-customer-form').attr('action', '/dashboard/customers/' + $('#destroy-customer-input').val());
+		$('#edit_customer_button').attr('href',
+		'/dashboard/customers/' + $('#destroy-customer-input').val() + '/edit');
 		
 	})
+
+
 </script>
 
 @endsection

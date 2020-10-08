@@ -97,9 +97,9 @@ class CustomersController extends Controller
      * @param  \App\Models\Customers  $customers
      * @return \Illuminate\Http\Response
      */
-    public function edit(Customers $customers)
+    public function edit(Customers $customer)
     {
-        //
+        dd($customer->name);
     }
 
     /**
