@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Customers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CustomersController extends Controller
 {
@@ -12,9 +13,28 @@ class CustomersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $r)
     {   
-        $customers = Customers::paginate(25);
+        $customers = DB::table('customers');
+
+        foreach($r->all() as $key=>$value){
+            $arr_like = ['name', 'adress'];
+
+            if(in_array($key, $arr_like))
+            {
+                $customers->where($key, 'LIKE', "%$value%");
+            }
+
+            $arr_equal = ['gender', 'age'];
+            if(in_array($key, $arr_equal))
+            {
+                $customers->where($key, $value);
+            }
+        }
+
+        $customers = $customers->paginate(25);
+
+
         return view('adminpanel.layouts.index')
         ->with(compact('customers'));
     }
