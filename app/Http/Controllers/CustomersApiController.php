@@ -11,6 +11,7 @@ class CustomersApiController extends Controller
 
     protected $token = 'ffsdf3c34t34t3';
 
+
     /**
      * Display a listing of the resource.
      *
@@ -18,6 +19,14 @@ class CustomersApiController extends Controller
      */
     public function index(Request $r)
     {   
+
+        if( $this->token != $r->header('token') )
+        {
+            return response()->json([
+                'message' => 'Błąd autoryzacji'
+            ], 401);
+        }
+
         $customers = DB::table('customers');
 
         foreach($r->all() as $key=>$value){
