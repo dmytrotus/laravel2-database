@@ -104,8 +104,15 @@ class CustomersApiController extends Controller
      * @param  \App\Models\Customers  $customers
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $r, Customers $customer)
-    {
+    public function update(Request $r, $customer)
+    {   
+        if( $this->token != $r->header('token') )
+        {
+            return response()->json([
+                'message' => 'Błąd autoryzacji'
+            ], 401);
+        }
+
         $r->validate([
             'name' => 'required|max:255',
             'adress' => 'required|max:255',
@@ -113,6 +120,7 @@ class CustomersApiController extends Controller
             'age' => 'required|max:3'
         ]);
 
+        $customer = Customers::find($customer);
         $customer->name = $r->name;
         $customer->adress = $r->adress;
         $customer->gender = $r->gender;
