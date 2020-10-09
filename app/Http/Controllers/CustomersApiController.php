@@ -37,7 +37,7 @@ class CustomersApiController extends Controller
             }
         }
 
-        $customers = $customers->paginate(25);
+        $customers = $customers->get();
 
 
         return response()->json([
