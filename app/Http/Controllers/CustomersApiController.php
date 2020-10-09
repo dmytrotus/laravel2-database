@@ -7,7 +7,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class CustomersApiController extends Controller
-{
+{   
+
+    protected $token = 'ffsdf3c34t34t3';
+
     /**
      * Display a listing of the resource.
      *
@@ -54,7 +57,15 @@ class CustomersApiController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $r)
-    {
+    {   
+        if( $this->token != $r->header('token') )
+        {
+            return response()->json([
+                'message' => 'Błąd autoryzacji'
+            ], 401);
+        }
+        
+
         $r->validate([
             'new_customer_name' => 'required|max:255',
             'new_customer_adress' => 'required|max:255',
@@ -73,7 +84,7 @@ class CustomersApiController extends Controller
                 'success' => true,
                 'message' => 'Użytkownik dodany'
 
-        ], 200);
+        ], 201);
     }
 
 
