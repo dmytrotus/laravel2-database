@@ -142,4 +142,21 @@ class CustomersApiController extends Controller
 
         ], 200);
     }
+
+    public function edit( Request $r, $customer )
+    {   
+        if( $this->token != $r->header('token') )
+        {
+            return response()->json([
+                'message' => 'Błąd autoryzacji'
+            ], 401);
+        }
+
+        $customer = Customers::find($customer);
+
+        return response()->json([
+                'success' => true,
+                'message' => $customer
+            ], 200);
+    }
 }
