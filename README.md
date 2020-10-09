@@ -10,3 +10,13 @@
 ## Application which has database with usersdata
 
 Aplication works with project1 through RESTful Api. 
+
+## How to install
+
+In your terminal run
+git clone < link to this repo >
+composer install
+php artisan key:generate
+php artiasan migrate
+php artisan db:seed
+php artisan serve --port=7777 Importand application project1 has domain for api requests http://127.0.0.1:7777. You need to run the server accourding the instruction or change port into the controller of project1 app.
