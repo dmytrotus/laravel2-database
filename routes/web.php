@@ -20,6 +20,9 @@ Route::get('/', function(){
 Auth::routes();
 
 Route::group(['middleware' => ['auth'], 'prefix' => 'dashboard'], function () {
-	Route::resource('customers', CustomersController::class);
+	//Route::resource('customers', CustomersController::class);
+	Route::get('/', function(){
+		return view('layouts.app');
+	});
 
 });
