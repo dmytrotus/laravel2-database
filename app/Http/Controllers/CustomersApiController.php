@@ -140,8 +140,16 @@ class CustomersApiController extends Controller
      * @param  \App\Models\Customers  $customers
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Customers $customer)
-    {
+    public function destroy(Request $r, $customer)
+    {   
+        if( $this->token != $r->header('token') )
+        {
+            return response()->json([
+                'message' => 'Błąd autoryzacji'
+            ], 401);
+        }
+
+        $customer = Customers::find($customer);
         $customer->delete();
         
         return response()->json([
