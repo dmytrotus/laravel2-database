@@ -48,16 +48,6 @@ class CustomersApiController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -78,33 +68,14 @@ class CustomersApiController extends Controller
             'gender' => $r->new_customer_gender,
             'age' => (int)$r->new_customer_age
         ]);
-        session()->flash('success', 'Użytkownik dodany');
 
-        return redirect()->back();
+        return response()->json([
+                'success' => true,
+                'message' => 'Użytkownik dodany'
+
+        ], 200);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Customers  $customers
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Customers $customers)
-    {
-        return redirect()->route('customers.index');
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Customers  $customers
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Customers $customer)
-    {
-        return view('adminpanel.layouts.single_customer')
-        ->with(compact('customer'));
-    }
 
     /**
      * Update the specified resource in storage.
@@ -128,8 +99,11 @@ class CustomersApiController extends Controller
         $customer->age = $r->age;
         $customer->save();
 
-        session()->flash('success', 'Użytkownik zaktualizowany');
-        return redirect()->back();
+        return response()->json([
+                'success' => true,
+                'message' => 'Użytkownik Zaktualizowany'
+
+        ], 200);
     }
 
     /**
@@ -141,8 +115,11 @@ class CustomersApiController extends Controller
     public function destroy(Customers $customer)
     {
         $customer->delete();
-        session()->flash('success', 'Użytkownik usunięty');
+        
+        return response()->json([
+                'success' => true,
+                'message' => 'Użytkownik usunięty'
 
-        return redirect()->back();
+        ], 200);
     }
 }
