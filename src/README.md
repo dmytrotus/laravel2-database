@@ -11,15 +11,12 @@
 
 Aplication works with project1 through RESTful Api. 
 
-## How to install IN DOCKER
+## How to install
 
 In your terminal run
 git clone < link to this repo >
-docker-compose up -d
-
-## Problem
-There is no set up for database yet. Service works properly, but there is a problem when you need to connect to the database.
-You need to set up expose ports for the database on your local machine or create the database in docker container and run
-
-php artisan migrate
+composer install
+php artisan key:generate
+php artiasan migrate
 php artisan db:seed
+php artisan serve --port=7777 Importand application project1 has domain for api requests http://127.0.0.1:7777. You need to run the server accourding the instruction or change port into the controller of project1 app.
